@@ -1836,7 +1836,13 @@
 				setters_order = ['yyyy', 'yy', 'M', 'MM', 'm', 'mm', 'd', 'dd'],
 				setters_map = {
 					yyyy: function(d,v){
-						return d.setUTCFullYear(assumeNearby ? applyNearbyYear(v, assumeNearby) : v);
+              if (assumeNearby) {
+						      return d.setUTCFullYear(applyNearbyYear(v, assumeNearby));
+              } else if (v < 100) {
+                  return d;
+              } else {
+                  return d.setUTCFullYear(v);
+              }
 					},
 					m: function(d,v){
 						if (isNaN(d))
